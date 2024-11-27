@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Kitten</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Pré-conexão com o Google Fonts para melhorar o carregamento das fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Importação das fontes Montserrat para títulos e Roboto para o corpo do texto -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variáveis CSS que definem as cores, fontes e outros elementos reutilizáveis */
+        :root {
+            --primary-color: #007bff; /* Cor primária */
+            --secondary-color: #6c757d; /* Cor secundária */
+            --background-color: #e9ecef; /* Cor de fundo geral da página */
+            --container-bg: #fff; /* Cor de fundo do container principal */
+            --section-bg: #f8f9fa; /* Cor de fundo das seções */
+            --input-border: #ced4da; /* Cor da borda dos inputs */
+            --shadow-color: rgba(0, 0, 0, 0.1); /* Cor da sombra para elementos */
+            --transition-speed: 0.3s; /* Velocidade de transição para animações */
+            --font-primary: 'Roboto', sans-serif; /* Fonte principal (para textos) */
+            --font-secondary: 'Montserrat', sans-serif; /* Fonte secundária (para títulos) */
+            --gradient-start: #007bff; /* Cor inicial do gradiente aplicado no título */
+            --gradient-end: #6610f2; /* Cor final do gradiente aplicado no título */
+        }
+
+        /* Reset básico para remover margens e preenchimentos padrão */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilo geral do corpo da página */
+        body {
+            font-family: var(--font-primary); /* Fonte definida como Roboto */
+            background-color: var(--background-color); /* Cor de fundo */
+            display: flex;
+            justify-content: center; /* Centraliza o conteúdo horizontalmente */
+            align-items: center; /* Centraliza o conteúdo verticalmente */
+            min-height: 100vh; /* Altura mínima de 100% da janela */
+            padding: 20px; /* Espaçamento interno */
+            animation: fadeIn 1s ease-in-out; /* Animação de fade-in ao carregar a página */
+        }
+
+        /* Estilos do container principal que envolve todo o conteúdo */
+        .container {
+            width: 100%;
+            max-width: 500px; /* Largura máxima de 500px */
+            background-color: var(--container-bg); /* Fundo branco */
+            padding: 30px; /* Espaçamento interno */
+            border-radius: 15px; /* Bordas arredondadas */
+            box-shadow: 0 8px 20px var(--shadow-color); /* Sombra */
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed); /* Transição suave em hover */
+        }
+
+        /* Efeito ao passar o mouse sobre o container */
+        .container:hover {
+            transform: translateY(-5px); /* Eleva o container levemente */
+            box-shadow: 0 12px 25px var(--shadow-color); /* Aumenta a sombra */
+        }
+
+        /* Estilo da imagem de capa */
+        .capa {
+            width: 100%;
+            height: auto;
+            border-radius: 15px 15px 0 0; /* Bordas arredondadas no topo */
+            object-fit: cover; /* Ajusta a imagem para cobrir o espaço disponível */
+            transition: transform var(--transition-speed); /* Transição suave ao redimensionar */
+        }
+
+        /* Efeito ao passar o mouse sobre a imagem de capa */
+        .capa:hover {
+            transform: scale(1.05); /* Leve ampliação da imagem */
+        }
+
+        /* Estilo do título (h1) */
+        h1 {
+            font-family: var(--font-secondary); /* Fonte Montserrat */
+            font-size: 2rem;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end)); /* Gradiente aplicado no texto */
+            -webkit-background-clip: text; /* Clipa o gradiente ao texto no Webkit */
+            -webkit-text-fill-color: transparent; /* Deixa a cor de preenchimento transparente */
+            background-clip: text; /* Clipa o gradiente ao texto */
+            color: transparent; /* O texto é transparente para mostrar o gradiente */
+            text-align: center; /* Centraliza o texto */
+            margin: 25px 0; /* Espaçamento vertical */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve no texto */
+            transition: background 0.5s ease; /* Transição suave no gradiente */
+        }
+
+        /* Estilo das seções */
+        .section {
+            margin-bottom: 25px; /* Espaçamento abaixo da seção */
+            padding: 20px; /* Espaçamento interno */
+            background-color: var(--section-bg); /* Cor de fundo clara */
+            border-radius: 10px; /* Bordas arredondadas */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Sombra leve */
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed); /* Transições suaves */
+        }
+
+        /* Efeito ao passar o mouse sobre as seções */
+        .section:hover {
+            background-color: #e2e6ea; /* Muda a cor de fundo */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Aumenta a sombra */
+        }
+
+        /* Estilo dos rótulos dos campos de entrada */
+        label {
+            display: block; /* Exibido como bloco */
+            margin-bottom: 8px; /* Espaçamento abaixo do rótulo */
+            color: var(--secondary-color); /* Cor do texto */
+            font-size: 1rem;
+            font-family: var(--font-secondary); /* Fonte Montserrat */
+            transition: color var(--transition-speed); /* Transição suave da cor */
+        }
+
+        /* Estilo dos campos de entrada */
+        input {
+            width: 100%; /* Largura total */
+            padding: 10px; /* Espaçamento interno */
+            margin-bottom: 12px; /* Espaçamento abaixo */
+            border-radius: 5px; /* Bordas arredondadas */
+            border: 1px solid var(--input-border); /* Borda */
+            font-size: 1rem;
+            transition: border-color var(--transition-speed), box-shadow var(--transition-speed); /* Transição suave da borda */
+            font-family: var(--font-primary); /* Fonte Roboto */
+        }
+
+        /* Estilo do campo de entrada quando está em foco */
+        input:focus {
+            border-color: var(--primary-color); /* Muda a cor da borda */
+            box-shadow: 0 0 5px var(--primary-color); /* Sombra ao redor do campo */
+            outline: none; /* Remove o contorno padrão */
+        }
+
+        /* Estilo dos parágrafos */
+        p {
+            font-size: 1rem;
+            color: #212529; /* Cor do texto */
+            transition: color var(--transition-speed); /* Transição suave da cor */
+            font-family: var(--font-primary); /* Fonte Roboto */
+        }
+
+        /* Estilo dos spans dentro dos parágrafos */
+        span {
+            font-weight: bold; /* Texto em negrito */
+            color: var(--primary-color); /* Cor do texto */
+            transition: color var(--transition-speed); /* Transição suave da cor */
+        }
+
+        /* Animação de fade-in usada na página */
+        @keyframes fadeIn {
+            from { opacity: 0; } /* Começa com opacidade 0 */
+            to { opacity: 1; } /* Termina com opacidade 1 */
+        }
+
+        /* Responsividade para telas menores */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem; /* Reduz o tamanho da fonte do título */
+            }
+
+            .section {
+                padding: 18px; /* Reduz o preenchimento interno das seções */
+            }
+
+            label, input, p {
+                font-size: 0.95rem; /* Reduz o tamanho da fonte dos rótulos, inputs e parágrafos */
+            }
+        }
+
+        /* Responsividade para telas muito pequenas */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px; /* Reduz o preenchimento interno do container */
+            }
+
+            h1 {
+                font-size: 1.5rem; /* Reduz ainda mais o tamanho da fonte do título */
+            }
+
+            label, input, p {
+                font-size: 0.9rem; /* Reduz o tamanho da fonte dos rótulos, inputs e parágrafos */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Imagem de capa do sistema -->
+        <img src="cat.webp" alt="Capa do Sistema" class="capa">
+        
+        <!-- Título do sistema -->
+        <h1>Sistema Kitten</h1>
+        
+        <!-- Primeira seção: entrada do valor a ser recebido -->
+        <div class="section">
+            <label for="receberValor">Se você quer receber (em R$):</label>
+            <input type="text" id="receberValor" oninput="formatarCampoMonetario(this); calcularSaque()" placeholder="Ex: 1000,00">
+            <p>Será sacado: <span id="resultadoSaque">R$ 0,00</span></p>
+        </div>
+
+        <!-- Segunda seção: entrada do valor a ser sacado -->
+        <div class="section">
+            <label for="sacarValor">Se você quer que seja sacado (em R$):</label>
+            <input type="text" id="sacarValor" oninput="formatarCampoMonetario(this); calcularReceber()" placeholder="Ex: 1000,00">
+            <p>Você receberá: <span id="resultadoReceber">R$ 0,00</span></p>
+        </div>
+    </div>
+    
+    <!-- Funções JavaScript para cálculo e formatação dos valores -->
+    <script>
+        /* Função para formatar um valor como moeda (R$) */
+        function formatarValor(valor) {
+            return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        /* Função que formata o campo de entrada como valor monetário */
+        function formatarCampoMonetario(campo) {
+            let valorNumerico = parseFloat(campo.value.replace(/\D/g, '')) || 0; /* Remove caracteres não numéricos */
+            campo.value = (valorNumerico / 100).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.'); /* Formata o valor */
+        }
+
+        /* Função para calcular o valor que será sacado com base no valor que se deseja receber */
+        function calcularSaque() {
+            const receberValor = parseFloat(document.getElementById('receberValor').value.replace(/\./g, '').replace(',', '.')) || 0;
+            const resultado = receberValor / 0.90; /* Calcula o valor a ser sacado (com base em uma taxa de 10%) */
+            document.getElementById('resultadoSaque').textContent = formatarValor(resultado); /* Exibe o resultado formatado */
+        }
+
+        /* Função para calcular o valor que se vai receber com base no valor que se deseja sacar */
+        function calcularReceber() {
+            const sacarValor = parseFloat(document.getElementById('sacarValor').value.replace(/\./g, '').replace(',', '.')) || 0;
+            const resultado = sacarValor * 0.90; /* Calcula o valor a ser recebido (descontando 10%) */
+            document.getElementById('resultadoReceber').textContent = formatarValor(resultado); /* Exibe o resultado formatado */
+        }
+    </script>
+</body>
+</html>
