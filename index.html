@@ -5,241 +5,539 @@
     <title>Sistema Kitten</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Pré-conexão com o Google Fonts para melhorar o carregamento das fontes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <!-- Importação das fontes Montserrat para títulos e Roboto para o corpo do texto -->
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
     
     <style>
-        /* Variáveis CSS que definem as cores, fontes e outros elementos reutilizáveis */
+        /* Variáveis CSS para reutilização */
         :root {
-            --primary-color: #007bff; /* Cor primária */
-            --secondary-color: #6c757d; /* Cor secundária */
-            --background-color: #e9ecef; /* Cor de fundo geral da página */
-            --container-bg: #fff; /* Cor de fundo do container principal */
-            --section-bg: #f8f9fa; /* Cor de fundo das seções */
-            --input-border: #ced4da; /* Cor da borda dos inputs */
-            --shadow-color: rgba(0, 0, 0, 0.1); /* Cor da sombra para elementos */
-            --transition-speed: 0.3s; /* Velocidade de transição para animações */
-            --font-primary: 'Roboto', sans-serif; /* Fonte principal (para textos) */
-            --font-secondary: 'Montserrat', sans-serif; /* Fonte secundária (para títulos) */
-            --gradient-start: #007bff; /* Cor inicial do gradiente aplicado no título */
-            --gradient-end: #6610f2; /* Cor final do gradiente aplicado no título */
+            --primary-color: #4e73df;
+            --secondary-color: #858796;
+            --background-color: #f8f9fc;
+            --container-bg: #ffffff;
+            --section-bg: #ffffff;
+            --input-border: #d1d3e2;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --error-color: #dc3545;
+            --transition-speed: 0.3s;
+            --font-primary: 'Roboto', sans-serif;
+            --font-secondary: 'Montserrat', sans-serif;
+            --gradient-start: #4e73df;
+            --gradient-end: #224abe;
         }
 
-        /* Reset básico para remover margens e preenchimentos padrão */
+        /* Reset básico */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* Estilo geral do corpo da página */
+        /* Estilo do corpo */
         body {
-            font-family: var(--font-primary); /* Fonte definida como Roboto */
-            background-color: var(--background-color); /* Cor de fundo */
+            font-family: var(--font-primary);
+            background-color: var(--background-color);
             display: flex;
-            justify-content: center; /* Centraliza o conteúdo horizontalmente */
-            align-items: center; /* Centraliza o conteúdo verticalmente */
-            min-height: 100vh; /* Altura mínima de 100% da janela */
-            padding: 20px; /* Espaçamento interno */
-            animation: fadeIn 1s ease-in-out; /* Animação de fade-in ao carregar a página */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        /* Estilos do container principal que envolve todo o conteúdo */
-        .container {
+        /* Container principal */
+        .container-custom {
             width: 100%;
-            max-width: 500px; /* Largura máxima de 500px */
-            background-color: var(--container-bg); /* Fundo branco */
-            padding: 30px; /* Espaçamento interno */
-            border-radius: 15px; /* Bordas arredondadas */
-            box-shadow: 0 8px 20px var(--shadow-color); /* Sombra */
-            transition: transform var(--transition-speed), box-shadow var(--transition-speed); /* Transição suave em hover */
+            max-width: 600px;
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
         }
 
-        /* Efeito ao passar o mouse sobre o container */
-        .container:hover {
-            transform: translateY(-5px); /* Eleva o container levemente */
-            box-shadow: 0 12px 25px var(--shadow-color); /* Aumenta a sombra */
+        .container-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px var(--shadow-color);
         }
 
-        /* Estilo da imagem de capa */
+        /* Imagem de capa */
         .capa {
             width: 100%;
             height: auto;
-            border-radius: 15px 15px 0 0; /* Bordas arredondadas no topo */
-            object-fit: cover; /* Ajusta a imagem para cobrir o espaço disponível */
-            transition: transform var(--transition-speed); /* Transição suave ao redimensionar */
+            border-radius: 15px 15px 0 0;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+            margin-bottom: 20px;
         }
 
-        /* Efeito ao passar o mouse sobre a imagem de capa */
         .capa:hover {
-            transform: scale(1.05); /* Leve ampliação da imagem */
+            transform: scale(1.05);
         }
 
-        /* Estilo do título (h1) */
+        /* Título */
         h1 {
-            font-family: var(--font-secondary); /* Fonte Montserrat */
+            font-family: var(--font-secondary);
             font-size: 2rem;
-            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end)); /* Gradiente aplicado no texto */
-            -webkit-background-clip: text; /* Clipa o gradiente ao texto no Webkit */
-            -webkit-text-fill-color: transparent; /* Deixa a cor de preenchimento transparente */
-            background-clip: text; /* Clipa o gradiente ao texto */
-            color: transparent; /* O texto é transparente para mostrar o gradiente */
-            text-align: center; /* Centraliza o texto */
-            margin: 25px 0; /* Espaçamento vertical */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve no texto */
-            transition: background 0.5s ease; /* Transição suave no gradiente */
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background 0.5s ease;
         }
 
-        /* Estilo das seções */
+        /* Seções */
         .section {
-            margin-bottom: 25px; /* Espaçamento abaixo da seção */
-            padding: 20px; /* Espaçamento interno */
-            background-color: var(--section-bg); /* Cor de fundo clara */
-            border-radius: 10px; /* Bordas arredondadas */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Sombra leve */
-            transition: background-color var(--transition-speed), box-shadow var(--transition-speed); /* Transições suaves */
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: var(--section-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
         }
 
-        /* Efeito ao passar o mouse sobre as seções */
         .section:hover {
-            background-color: #e2e6ea; /* Muda a cor de fundo */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Aumenta a sombra */
+            background-color: #f1f3f5;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* Estilo dos rótulos dos campos de entrada */
+        /* Rótulos */
         label {
-            display: block; /* Exibido como bloco */
-            margin-bottom: 8px; /* Espaçamento abaixo do rótulo */
-            color: var(--secondary-color); /* Cor do texto */
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: var(--secondary-color);
             font-size: 1rem;
-            font-family: var(--font-secondary); /* Fonte Montserrat */
-            transition: color var(--transition-speed); /* Transição suave da cor */
+            font-family: var(--font-secondary);
+            transition: color var(--transition-speed);
         }
 
-        /* Estilo dos campos de entrada */
+        label i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        /* Inputs */
         input {
-            width: 100%; /* Largura total */
-            padding: 10px; /* Espaçamento interno */
-            margin-bottom: 12px; /* Espaçamento abaixo */
-            border-radius: 5px; /* Bordas arredondadas */
-            border: 1px solid var(--input-border); /* Borda */
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 12px;
+            border-radius: 5px;
+            border: 1px solid var(--input-border);
             font-size: 1rem;
-            transition: border-color var(--transition-speed), box-shadow var(--transition-speed); /* Transição suave da borda */
-            font-family: var(--font-primary); /* Fonte Roboto */
+            transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+            font-family: var(--font-primary);
         }
 
-        /* Estilo do campo de entrada quando está em foco */
         input:focus {
-            border-color: var(--primary-color); /* Muda a cor da borda */
-            box-shadow: 0 0 5px var(--primary-color); /* Sombra ao redor do campo */
-            outline: none; /* Remove o contorno padrão */
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px var(--primary-color);
+            outline: none;
         }
 
-        /* Estilo dos parágrafos */
+        /* Input com erro */
+        .is-invalid {
+            border-color: var(--error-color);
+            box-shadow: 0 0 5px var(--error-color);
+        }
+
+        /* Mensagens de erro */
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: -8px;
+            margin-bottom: 12px;
+        }
+
+        /* Botões */
+        .btn-custom {
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: var(--font-secondary);
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(90deg, var(--gradient-end), var(--gradient-start));
+        }
+
+        /* Parágrafos */
         p {
             font-size: 1rem;
-            color: #212529; /* Cor do texto */
-            transition: color var(--transition-speed); /* Transição suave da cor */
-            font-family: var(--font-primary); /* Fonte Roboto */
+            color: #212529;
+            transition: color var(--transition-speed);
+            font-family: var(--font-primary);
         }
 
-        /* Estilo dos spans dentro dos parágrafos */
+        /* Spans */
         span {
-            font-weight: bold; /* Texto em negrito */
-            color: var(--primary-color); /* Cor do texto */
-            transition: color var(--transition-speed); /* Transição suave da cor */
+            font-weight: bold;
+            color: var(--primary-color);
+            transition: color var(--transition-speed);
         }
 
-        /* Animação de fade-in usada na página */
-        @keyframes fadeIn {
-            from { opacity: 0; } /* Começa com opacidade 0 */
-            to { opacity: 1; } /* Termina com opacidade 1 */
+        /* Containers de Informação (Será sacado e Saldo Restante) */
+        .info-container {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--section-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
         }
 
-        /* Responsividade para telas menores */
+        .info-container:hover {
+            background-color: #f1f3f5;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-text {
+            font-size: 1.1rem;
+            font-family: var(--font-secondary);
+            color: var(--secondary-color);
+        }
+
+        .info-valor {
+            font-size: 1.1rem;
+            font-family: var(--font-primary);
+            color: var(--primary-color);
+        }
+
+        /* Nova Estilização para Saldo Atual */
+        .saldo-card {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centraliza os itens horizontalmente */
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            margin-bottom: 25px; /* Espaço abaixo do card */
+        }
+
+        /* Estrutura flex com três elementos */
+        .saldo-card .left-icon,
+        .saldo-card .right-icon {
+            flex: 0 0 40px; /* Largura fixa para os ícones */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .saldo-card .left-icon i,
+        .saldo-card .right-icon i {
+            font-size: 2rem;
+        }
+
+        .saldo-details {
+            flex: 1; /* Ocupa o espaço restante */
+            text-align: center;
+        }
+
+        .saldo-details .saldo-titulo {
+            font-family: var(--font-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .saldo-details .saldo-valor {
+            font-family: var(--font-secondary);
+            font-size: 1.8rem;
+            font-weight: bold;
+            animation: countUp 1s ease-out forwards;
+        }
+
+        /* Animação de contagem */
+        @keyframes countUp {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsividade */
         @media (max-width: 768px) {
             h1 {
-                font-size: 1.8rem; /* Reduz o tamanho da fonte do título */
+                font-size: 1.8rem;
             }
 
-            .section {
-                padding: 18px; /* Reduz o preenchimento interno das seções */
+            .section, .info-container, .saldo-card {
+                padding: 18px;
             }
 
             label, input, p {
-                font-size: 0.95rem; /* Reduz o tamanho da fonte dos rótulos, inputs e parágrafos */
+                font-size: 0.95rem;
+            }
+
+            .info-text, .info-valor, .saldo-titulo, .saldo-valor {
+                font-size: 1rem;
+            }
+
+            .saldo-card .left-icon,
+            .saldo-card .right-icon {
+                flex: 0 0 30px; /* Redução da largura dos ícones */
+            }
+
+            .saldo-card .left-icon i,
+            .saldo-card .right-icon i {
+                font-size: 1.5rem; /* Redução do tamanho dos ícones */
+            }
+
+            .saldo-details .saldo-titulo {
+                font-size: 1rem;
+            }
+
+            .saldo-details .saldo-valor {
+                font-size: 1.5rem;
             }
         }
 
-        /* Responsividade para telas muito pequenas */
         @media (max-width: 480px) {
-            .container {
-                padding: 20px; /* Reduz o preenchimento interno do container */
+            .container-custom {
+                padding: 20px;
             }
 
             h1 {
-                font-size: 1.5rem; /* Reduz ainda mais o tamanho da fonte do título */
+                font-size: 1.5rem;
             }
 
             label, input, p {
-                font-size: 0.9rem; /* Reduz o tamanho da fonte dos rótulos, inputs e parágrafos */
+                font-size: 0.9rem;
             }
+
+            .info-text, .info-valor, .saldo-titulo, .saldo-valor {
+                font-size: 0.95rem;
+            }
+
+            .saldo-card .left-icon,
+            .saldo-card .right-icon {
+                flex: 0 0 25px; /* Mais redução da largura */
+            }
+
+            .saldo-card .left-icon i,
+            .saldo-card .right-icon i {
+                font-size: 1.3rem; /* Mais redução do tamanho dos ícones */
+            }
+
+            .saldo-details .saldo-titulo {
+                font-size: 0.9rem;
+            }
+
+            .saldo-details .saldo-valor {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Animação de fade-in */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container-custom">
         <!-- Imagem de capa do sistema -->
         <img src="cat.webp" alt="Capa do Sistema" class="capa">
-        
+
         <!-- Título do sistema -->
         <h1>Sistema Kitten</h1>
-        
+
+        <!-- Entrada do Saldo Inicial -->
+        <div class="section">
+            <label for="saldoInicial"><i class="bi bi-bank2"></i> Saldo Inicial (R$):</label>
+            <input type="text" id="saldoInicial" oninput="formatarCampoMonetario(this); atualizarSaldo()" placeholder="Ex: 2500,00">
+            <div id="saldoInicialError" class="error-message d-none">Por favor, insira um saldo válido.</div>
+        </div>
+
+        <!-- Saldo Atual - Nova Estilização -->
+        <div class="saldo-card">
+            <div class="left-icon">
+                <i class="bi bi-wallet2"></i>
+            </div>
+            <div class="saldo-details">
+                <div class="saldo-titulo">Saldo Atual:</div>
+                <div class="saldo-valor" id="saldoAtual">0,00</div>
+            </div>
+            <div class="right-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+            </div>
+        </div>
+
         <!-- Primeira seção: entrada do valor a ser recebido -->
         <div class="section">
-            <label for="receberValor">Se você quer receber (em R$):</label>
-            <input type="text" id="receberValor" oninput="formatarCampoMonetario(this); calcularSaque()" placeholder="Ex: 1000,00">
-            <p>Será sacado: <span id="resultadoSaque">R$ 0,00</span></p>
+            <label for="receberValor"><i class="bi bi-cash-stack"></i> Se você quer receber (em R$):</label>
+            <input type="text" id="receberValor" oninput="formatarCampoMonetario(this); calcularSaque()" placeholder="Ex: 2250,00">
+            <div id="receberValorError" class="error-message d-none">Saldo insuficiente para este valor.</div>
+            
+            <!-- Informações padronizadas -->
+            <div class="info-container">
+                <div class="info-text">Será sacado:</div>
+                <div class="info-valor">R$ <span id="resultadoSaque">0,00</span></div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-text">Saldo Restante:</div>
+                <div class="info-valor">R$ <span id="saldoRestanteSaque">0,00</span></div>
+            </div>
         </div>
 
         <!-- Segunda seção: entrada do valor a ser sacado -->
         <div class="section">
-            <label for="sacarValor">Se você quer que seja sacado (em R$):</label>
-            <input type="text" id="sacarValor" oninput="formatarCampoMonetario(this); calcularReceber()" placeholder="Ex: 1000,00">
-            <p>Você receberá: <span id="resultadoReceber">R$ 0,00</span></p>
+            <label for="sacarValor"><i class="bi bi-wallet2"></i> Se você quer que seja sacado (em R$):</label>
+            <input type="text" id="sacarValor" oninput="formatarCampoMonetario(this); calcularReceber()" placeholder="Ex: 2500,00">
+            <div id="sacarValorError" class="error-message d-none">Saldo insuficiente para este valor.</div>
+            
+            <!-- Informações padronizadas -->
+            <div class="info-container">
+                <div class="info-text">Você receberá:</div>
+                <div class="info-valor">R$ <span id="resultadoReceber">0,00</span></div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-text">Saldo Restante:</div>
+                <div class="info-valor">R$ <span id="saldoRestanteReceber">0,00</span></div>
+            </div>
         </div>
     </div>
     
-    <!-- Funções JavaScript para cálculo e formatação dos valores -->
+    <!-- Bootstrap 5 JS e Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JavaScript ES6+ -->
     <script>
-        /* Função para formatar um valor como moeda (R$) */
-        function formatarValor(valor) {
+        // Inicializar saldo atual
+        let saldoAtual = 0.00; // Saldo inicial em reais
+
+        // Função para formatar valor como moeda
+        const formatarValor = (valor) => {
             return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        }
+        };
 
-        /* Função que formata o campo de entrada como valor monetário */
-        function formatarCampoMonetario(campo) {
-            let valorNumerico = parseFloat(campo.value.replace(/\D/g, '')) || 0; /* Remove caracteres não numéricos */
-            campo.value = (valorNumerico / 100).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.'); /* Formata o valor */
-        }
+        // Função para formatar campo monetário
+        const formatarCampoMonetario = (campo) => {
+            let valorNumerico = parseFloat(campo.value.replace(/\D/g, '')) || 0;
+            campo.value = (valorNumerico / 100).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        };
 
-        /* Função para calcular o valor que será sacado com base no valor que se deseja receber */
-        function calcularSaque() {
-            const receberValor = parseFloat(document.getElementById('receberValor').value.replace(/\./g, '').replace(',', '.')) || 0;
-            const resultado = receberValor / 0.90; /* Calcula o valor a ser sacado (com base em uma taxa de 10%) */
-            document.getElementById('resultadoSaque').textContent = formatarValor(resultado); /* Exibe o resultado formatado */
-        }
+        // Atualizar saldo atual no DOM
+        const atualizarSaldoAtual = () => {
+            document.getElementById('saldoAtual').textContent = saldoAtual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('saldoRestanteSaque').textContent = saldoAtual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('saldoRestanteReceber').textContent = saldoAtual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        };
 
-        /* Função para calcular o valor que se vai receber com base no valor que se deseja sacar */
-        function calcularReceber() {
-            const sacarValor = parseFloat(document.getElementById('sacarValor').value.replace(/\./g, '').replace(',', '.')) || 0;
-            const resultado = sacarValor * 0.90; /* Calcula o valor a ser recebido (descontando 10%) */
-            document.getElementById('resultadoReceber').textContent = formatarValor(resultado); /* Exibe o resultado formatado */
-        }
+        // Atualizar saldo com base na entrada do usuário
+        const atualizarSaldo = () => {
+            const saldoInput = document.getElementById('saldoInicial').value;
+            const novoSaldo = parseFloat(saldoInput.replace(/\./g, '').replace(',', '.')) || 0;
+            saldoAtual = novoSaldo;
+            atualizarSaldoAtual();
+            limparResultados();
+        };
+
+        // Limpar resultados quando o saldo é atualizado
+        const limparResultados = () => {
+            document.getElementById('resultadoSaque').textContent = formatarValor(0);
+            document.getElementById('resultadoReceber').textContent = formatarValor(0);
+            document.getElementById('saldoRestanteSaque').textContent = formatarValor(saldoAtual);
+            document.getElementById('saldoRestanteReceber').textContent = formatarValor(saldoAtual);
+            limparErros();
+        };
+
+        // Limpar mensagens de erro
+        const limparErros = () => {
+            document.getElementById('receberValorError').classList.add('d-none');
+            document.getElementById('sacarValorError').classList.add('d-none');
+            document.getElementById('receberValor').classList.remove('is-invalid');
+            document.getElementById('sacarValor').classList.remove('is-invalid');
+            document.getElementById('saldoInicialError').classList.add('d-none');
+            document.getElementById('saldoInicial').classList.remove('is-invalid');
+        };
+
+        // Calcular saque baseado no valor a receber
+        const calcularSaque = () => {
+            limparErros();
+            const receberValorInput = document.getElementById('receberValor');
+            const receberValor = parseFloat(receberValorInput.value.replace(/\./g, '').replace(',', '.')) || 0;
+            const resultado = receberValor / 0.90;
+
+            if (resultado > saldoAtual) {
+                // Exibir mensagem de erro
+                document.getElementById('receberValorError').classList.remove('d-none');
+                receberValorInput.classList.add('is-invalid');
+                document.getElementById('resultadoSaque').textContent = formatarValor(0);
+                document.getElementById('saldoRestanteSaque').textContent = formatarValor(saldoAtual);
+                return;
+            }
+
+            document.getElementById('resultadoSaque').textContent = saldoFormatado(resultado);
+            const saldoRestante = saldoAtual - resultado;
+            document.getElementById('saldoRestanteSaque').textContent = saldoFormatado(saldoRestante);
+        };
+
+        // Calcular o valor a receber baseado no valor a sacar
+        const calcularReceber = () => {
+            limparErros();
+            const sacarValorInput = document.getElementById('sacarValor');
+            const sacarValor = parseFloat(sacarValorInput.value.replace(/\./g, '').replace(',', '.')) || 0;
+            const resultado = sacarValor * 0.90;
+
+            if (sacarValor > saldoAtual) {
+                // Exibir mensagem de erro
+                document.getElementById('sacarValorError').classList.remove('d-none');
+                sacarValorInput.classList.add('is-invalid');
+                document.getElementById('resultadoReceber').textContent = formatarValor(0);
+                document.getElementById('saldoRestanteReceber').textContent = formatarValor(saldoAtual);
+                return;
+            }
+
+            document.getElementById('resultadoReceber').textContent = saldoFormatado(resultado);
+            const saldoRestante = saldoAtual - sacarValor;
+            document.getElementById('saldoRestanteReceber').textContent = saldoFormatado(saldoRestante);
+        };
+
+        // Formatar saldo para exibição
+        const saldoFormatado = (valor) => {
+            return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        };
+
+        // Validar e formatar o Saldo Inicial
+        const validarSaldoInicial = () => {
+            const saldoInput = document.getElementById('saldoInicial');
+            const saldoValue = saldoInput.value.replace(/\./g, '').replace(',', '.');
+            const saldoNumerico = parseFloat(saldoValue);
+
+            if (isNaN(saldoNumerico) || saldoNumerico < 0) {
+                document.getElementById('saldoInicialError').classList.remove('d-none');
+                saldoInput.classList.add('is-invalid');
+            } else {
+                document.getElementById('saldoInicialError').classList.add('d-none');
+                saldoInput.classList.remove('is-invalid');
+            }
+        };
+
+        // Atualizar saldo ao carregar a página
+        window.onload = () => {
+            atualizarSaldoAtual();
+        };
     </script>
 </body>
 </html>
